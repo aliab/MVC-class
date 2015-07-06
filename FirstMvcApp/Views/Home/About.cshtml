@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "About";
+    int j = DateTime.Now.Second;
+    j = j / 2;
+    
+    Mod
+}
+
+<h2>My About Page!</h2>
+About US!
+
+<h2>
+    @ViewBag.Department
+</h2>
+
+@foreach (int eid in empList)
+{
+    <div>
+        <span>
+            Id: @eid
+        </span>
+        <span>
+            Name: @eid
+        </span>
+    </div>
+}
+    

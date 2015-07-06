@@ -1,0 +1,20 @@
+﻿@model IEnumerable<FirstMvcApp.Models.Student>
+@{
+    ViewBag.Title = "MyList";
+}
+
+<h2>MyList</h2>
+
+@Model.Count()
+
+@foreach (var st in Model)
+{
+    <div>
+        @Html.Partial("StudentInfoView",st);
+    </div>
+}
+
+@section Head
+{
+    <meta name="author" content="Me!" />
+}

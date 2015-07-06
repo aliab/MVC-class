@@ -1,0 +1,68 @@
+﻿@model FirstMvcApp.Models.Student
+
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New</h2>
+
+
+@using (Html.BeginForm("NewStudent", "Students", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(d=>d.Number)
+    <table>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(m => m.Name)
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Name)
+                @Html.ValidationMessageFor(d=>d.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(m => m.LastName)
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.LastName)
+                @Html.ValidationMessageFor(d => d.LastName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.NumberEditor("Number")
+        </td>
+        <td>
+            @Html.FarsiDp("Date")
+            @Html.TextBoxFor(m => m.Number, new {@class="txt-primary" })
+            @Html.ValidationMessageFor(d => d.Number)
+
+        </td>
+    </tr>
+        @*<tr>
+            <td>
+                @Html.DisplayNameFor(m => m.Mark)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.Mark)
+                @Html.ValidationMessageFor(d => d.Mark)
+            </td>
+        </tr>*@
+        <tr>
+            <td>Password:</td>
+            <td>
+                <input type="password" name="password" />
+
+                
+            </td>
+        </tr>
+    <tr>
+        <td colspan="2">
+            <input type="submit" value="تایید">
+            @Html.ValidationSummary()
+        </td>
+    </tr>
+</table>
+}

@@ -1,0 +1,79 @@
+﻿@model List<FirstMvcApp.Models.Student>
+@{
+    ViewBag.Title = "List";
+}
+@Html.ActionLink("Go To Admin Panel","Index", "Default", new {area = "Admin" },null)
+<h2>List</h2>
+<h3>
+    تعداد دانشجویان قبولی:
+    @*@ViewBag.StudentCount*@
+    @ViewData["StudentCount"]
+</h3>
+<table>
+    <thead>
+        <tr>
+            <td>نام</td>
+            <td>نام خانوادگی</td>
+            <td>شماره دانشجویی</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (FirstMvcApp.Models.Student st in Model)
+        {
+            <tr>
+                <td>@st.Name</td>
+                <td>@st.LastName</td>
+                <td>@st.Number</td>
+                <td><input type="button" value="View" class="viewBtn" data-id="@st.Mark" /> </td>
+            </tr>
+        }
+    </tbody>
+    <script type="text/javascript">
+        $(function(){
+            $('.viewBtn').on('click', function () {
+                var id = $(this).data("id");
+                
+
+                $.ajax({
+                    url: '@Url.Action("GetFullInfo")' + '/' + id,
+                    //data: {id:id}
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result);
+                        $('#name').html(result.Name);
+                        $('#last').html(result.LastName);
+                    }
+                });
+            });
+        })
+    </script>
+</table>
+
+
+@*.ajax({
+        url: '@Url.Action("ViewFullInfo")' + '/' + id,
+        //data: {id:id}
+        type: 'GET',
+        dataType: 'html',
+        success: function (result) { $('#container').html(result);}
+    });*@
+
+
+
+
+<div id="container">
+
+</div>
+
+<table>
+    <tr>
+        <td>Name:</td>
+        <td id="name"></td>
+    </tr>
+    <tr>
+        <td>Last:</td>
+        <td id="last"></td>
+    </tr>
+</table>

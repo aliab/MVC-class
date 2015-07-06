@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="post_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int64" />
+    <Property Name="title" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="thumbnail" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="creation_date" Type="DateTime" Precision="3" />
+    <Property Name="publish_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="user" Relationship="Self.FK_post_users" FromRole="post" ToRole="users" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="mobile" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="birthday" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="posts" Relationship="Self.FK_post_users" FromRole="users" ToRole="post" />
+  </EntityType>
+  <Association Name="FK_post_users">
+    <End Role="users" Type="Self.user" Multiplicity="0..1" />
+    <End Role="post" Type="Self.post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="post">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="posts" EntityType="Self.post" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK_post_users" Association="Self.FK_post_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="post" EntitySet="posts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
